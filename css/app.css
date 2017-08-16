@@ -1,2 +1,26 @@
 @import url("foundation.min.css");
 @import url("font-awesome.min.css");
+
+.card {
+  text-align: center;
+  position: relative;
+}
+
+.done-frame {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /*border: 1px solid black;*/
+}
+
+.done-message {
+  width: 100%;
+  padding: 20px 0;
+  background-color: #27ae60;
+  color: white;
+  font-size: 32px;
+}

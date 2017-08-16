@@ -2,10 +2,9 @@ $(document).foundation();
 var app = angular.module('MvP-Timer', ['timer']);
 app.controller('myCtrl', function($scope, $filter) {
   $scope.newMvp = { time: new Date() };
-  // $scope.newMvp = { time: $filter('date')(new Date(), "short") };
-  // $scope.newMvp = { time: new Date() };
   $scope.deadMvps = [];
-  var timeExceptions = {'-1': '1 hour after maintenance', '-2': 'summon required', '-3': 'only clans with castle', '-4': 'between 90 and 150 minutes'}
+  // $scope.deadMvps = [{name: 'Jocyvan', died:  new Date(), rebirth: new Date(), interval: 3, finished: false}];
+  var timeExceptions = {'-1': '1 hour after maintenance', '-2': 'summon required', '-3': 'only clans with castle', '-4': 'between 90 and 150 minutes'};
   $scope.mvpArr = [
     { name: 'Orc Herói', nv: 50, time: 60, map: 'gef_fild03', difficulty: 'easy' },
     { name: 'Maya', nv: 55, time: 120, map: 'anthell02', difficulty: 'easy' },
@@ -69,17 +68,21 @@ app.controller('myCtrl', function($scope, $filter) {
     var mvp = $scope.newMvp.obj;
     var died = $scope.newMvp.time;
     var rebirth = new Date(died.getTime() + mvp.time * 60000);
-    var now = new Date();
-    var interval = (rebirth - new Date(1970, 0, 1, now.getHours(), now.getMinutes(), 0))/1000;
+    // var now = new Date();
+    var interval = (rebirth - new Date())/1000;
 
-    debugger;
-
-    $scope.deadMvps.push({name: mvp.name, died: died, rebirth: rebirth, interval: interval});
+    $scope.deadMvps.push({name: mvp.name, died: died, rebirth: rebirth, interval: interval, finished: false});
     // $scope.newMvp = null;
     $scope.newMvp = { time: new Date() };
-  }
+  };
 
   $scope.removeMvpTimer = function(i){
     $scope.deadMvps.splice(i, 1);
-  }
+  };
+
+  $scope.timerDone = function(mvp) {
+    mvp.finished = true;
+    var audio = new Audio('sound/alert.mp3');
+    audio.play();
+  };
 });
