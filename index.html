@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    <title>MvP Timer</title>
     <!-- <link rel="stylesheet" href="css/foundation.css"> -->
     <link rel="stylesheet" href="css/app.css">
   </head>
@@ -15,7 +15,7 @@
         <form class="new-mvp-form" name="mvpForm">
           <div class="input-group">
             <select class="input-group-field" name="new-mvp" ng-options="mvp.name for mvp in mvpArr track by mvp.name" ng-model="newMvp.obj"></select>
-            <input class="input-group-field" type="time" name="new-time" placeholder="Time was dead" ng-model="newMvp.time">
+            <input class="input-group-field" type="datetime-local" name="new-time" placeholder="Time was dead" ng-model="newMvp.time">
             <div class="input-group-button">
               <input type="submit" class="button" value="Add" ng-click="addMvpTimer()">
             </div>
@@ -33,7 +33,7 @@
                 </div>
                 <img src="http://placehold.it/300x200">
                 <div class="card-section">
-                  <h4>00:00</h4>
+                  <h4><timer interval="1000" countdown="mvp.interval">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></h4>
                   <p><i class="fa fa-times"></i> {{mvp.died | date:'shortTime'}} <i class="fa fa-sun-o"></i> {{mvp.rebirth | date:'shortTime'}}</p>
                   <div class="label alert" ng-click="removeMvpTimer($index)"><i class="fa fa-times"></i> Remover</div>
                 </div>
@@ -48,8 +48,12 @@
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
-
     <script src="js/angular.min.js"></script>
+
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/moment/min/locales.min.js"></script>
+    <script src="bower_components/humanize-duration/humanize-duration.js"></script>
+    <script src="bower_components/angular-timer/dist/angular-timer.min.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
