@@ -28,9 +28,30 @@
             <div class="large-4 medium-4 cell" ng-repeat="mvp in deadMvps">
               <div class="card">
                 <div class="card-divider">
-                  {{mvp.name}}
+                  {{mvp.obj.name}}
                 </div>
-                <img src="http://placehold.it/300x200">
+                <table>
+                  <thead>
+                  <tbody>
+                    <tr>
+                      <td>Level</td>
+                      <td>{{mvp.obj.lvl}}</td>
+                    </tr>
+                    <tr>
+                      <td>Time to rebirth</td>
+                      <td>{{mvp.obj.time}} min</td>
+                    </tr>
+                    <tr>
+                      <td>Map</td>
+                      <td>{{mvp.obj.map}}</td>
+                    </tr>
+                    <tr>
+                      <td>Difficulty</td>
+                      <td>{{mvp.obj.difficulty}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <img src="http://placehold.it/300x200"> -->
                 <div class="card-section">
                   <h4><timer interval="1000" countdown="mvp.interval" finish-callback="timerDone(mvp)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></h4>
                   <p><i class="fa fa-times"></i> {{mvp.died | date:'shortTime'}} <i class="fa fa-sun-o"></i> {{mvp.rebirth | date:'shortTime'}}</p>

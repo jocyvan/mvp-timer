@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.card-divider {
+  font-weight: bold;
+}
+
 .done-frame {
   height: 100%;
   width: 100%;
@@ -23,4 +27,8 @@
   background-color: #27ae60;
   color: white;
   font-size: 32px;
+}
+
+table {
+  margin: 0;
 }
