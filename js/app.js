@@ -2,8 +2,6 @@ $(document).foundation();
 var app = angular.module('MvP-Timer', ['timer']);
 app.controller('myCtrl', function($scope, $filter) {
   $scope.newMvp = { time: new Date() };
-  $scope.deadMvps = [];
-  // $scope.deadMvps = [{name: 'Jocyvan', died:  new Date(), rebirth: new Date(), interval: 3, finished: false}];
   var timeExceptions = {'-1': '1 hour after maintenance', '-2': 'summon required', '-3': 'only clans with castle', '-4': 'between 90 and 150 minutes'};
   $scope.mvpArr = [
     { name: 'Orc Herói', nv: 50, time: 60, map: 'gef_fild03', difficulty: 'easy' },
@@ -64,25 +62,37 @@ app.controller('myCtrl', function($scope, $filter) {
     { name: 'Lorde Seyren', nv: 160, time: -4, map: 'lhz_dun03', difficulty: 'crazy' }
   ];
 
+  var deadMvps = JSON.parse(localStorage.getItem('deadMvps'));
+  $scope.deadMvps = deadMvps ? loadDeadMvps(deadMvps) : [];
+
   $scope.addMvpTimer = function(){
     var mvp = $scope.newMvp.obj;
     var died = $scope.newMvp.time;
     var rebirth = new Date(died.getTime() + mvp.time * 60000);
-    // var now = new Date();
     var interval = (rebirth - new Date())/1000;
 
     $scope.deadMvps.push({name: mvp.name, died: died, rebirth: rebirth, interval: interval, finished: false});
-    // $scope.newMvp = null;
+    localStorage.setItem('deadMvps', JSON.stringify($scope.deadMvps));
     $scope.newMvp = { time: new Date() };
   };
 
   $scope.removeMvpTimer = function(i){
     $scope.deadMvps.splice(i, 1);
+    localStorage.setItem('deadMvps', JSON.stringify($scope.deadMvps));
   };
 
-  $scope.timerDone = function(mvp) {
+  $scope.timerDone = function(mvp){
     mvp.finished = true;
     var audio = new Audio('sound/alert.mp3');
     audio.play();
   };
+
+  function loadDeadMvps(mvps){
+    mvps.forEach(function(mvp){
+      mvp.interval = (new Date(mvp.rebirth) - new Date())/1000;
+      mvp.interval = (mvp.interval < 0) ? 0 : mvp.interval;
+    });
+
+    return mvps;
+  }
 });
