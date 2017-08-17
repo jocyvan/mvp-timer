@@ -70,15 +70,16 @@ app.controller('myCtrl', function($scope, $filter) {
     var died = $scope.newMvp.time;
     var rebirth = new Date(died.getTime() + mvp.time * 60000);
     var interval = (rebirth - new Date())/1000;
+    interval = (interval < 0) ? 0 : interval;
 
     $scope.deadMvps.push({name: mvp.name, died: died, rebirth: rebirth, interval: interval, finished: false});
-    localStorage.setItem('deadMvps', JSON.stringify($scope.deadMvps));
+    localStorage.setItem('deadMvps', angular.toJson($scope.deadMvps));
     $scope.newMvp = { time: new Date() };
   };
 
   $scope.removeMvpTimer = function(i){
     $scope.deadMvps.splice(i, 1);
-    localStorage.setItem('deadMvps', JSON.stringify($scope.deadMvps));
+    localStorage.setItem('deadMvps', angular.toJson($scope.deadMvps));
   };
 
   $scope.timerDone = function(mvp){
