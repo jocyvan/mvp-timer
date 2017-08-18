@@ -84,7 +84,7 @@ app.controller('myCtrl', function($scope, $filter) {
 
   $scope.timerDone = function(mvp){
     mvp.finished = true;
-    var audio = new Audio('sound/alert.mp3');
+    var audio = new Audio('sound/pop.mp3');
     audio.play();
   };
 
